@@ -21,9 +21,9 @@
 
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
-from ax25_decode_pp import ax25_decode_pp
+from aprs_append_path import aprs_append_path
 
-class qa_ax25_decode_pp (gr_unittest.TestCase):
+class qa_aprs_append_path (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -38,4 +38,4 @@ class qa_ax25_decode_pp (gr_unittest.TestCase):
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_ax25_decode_pp, "qa_ax25_decode_pp.xml")
+    gr_unittest.run(qa_aprs_append_path, "qa_aprs_append_path.xml")

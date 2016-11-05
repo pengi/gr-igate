@@ -16,7 +16,10 @@
 # along with GNU Radio; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-
 install(FILES
-    igate_ax25_decode_pp.xml DESTINATION share/gnuradio/grc/blocks
+    igate_clock_recovery_timer_bb.xml
+    igate_aprs_air_to_is_pp.xml
+    igate_debug_print_msg.xml
+    igate_aprs_append_path.xml
+    igate_aprs_pkt_gen.xml DESTINATION share/gnuradio/grc/blocks
 )

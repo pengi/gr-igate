@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<block>
+  <name>APRS air to IS</name>
+  <key>igate_aprs_air_to_is_pp</key>
+  <category>[igate]</category>
+  <import>import igate</import>
+  <make>igate.aprs_air_to_is_pp()</make>
+  <sink>
+    <name>in</name>
+    <type>message</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>message</type>
+  </source>
+</block>

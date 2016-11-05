@@ -24,12 +24,17 @@ description here (python/__init__.py).
 '''
 
 # import swig generated symbols into the igate namespace
-try:
-	# this might fail if the module is python-only
-	from igate_swig import *
-except ImportError:
-	pass
+from igate_swig import *
 
 # import any pure python here
-from ax25_decode_pp import ax25_decode_pp
+
+from aprs_air_to_is_pp import aprs_air_to_is_pp
+from debug_print_msg import debug_print_msg
+from aprs_append_path import aprs_append_path
+from msg_timed_source import msg_timed_source
+from aprs_pkt_gen import aprs_pkt_gen
+
+
+
+
 #
