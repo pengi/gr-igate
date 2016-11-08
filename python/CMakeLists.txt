@@ -35,7 +35,8 @@ GR_PYTHON_INSTALL(
     debug_print_msg.py
     aprs_append_path.py
     msg_timed_source.py
-    aprs_pkt_gen.py DESTINATION ${GR_PYTHON_DIR}/igate
+    aprs_pkt_gen.py
+    aprs_demod.py DESTINATION ${GR_PYTHON_DIR}/igate
 )
 
 ########################################################################

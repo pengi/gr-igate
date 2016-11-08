@@ -355,49 +355,6 @@
     </param>
   </block>
   <block>
-    <key>chn_recv</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(426, 506)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>chn_recv_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>samp_rate</key>
-      <value>samp_rate</value>
-    </param>
-  </block>
-  <block>
     <key>freq_xlating_fft_filter_ccc</key>
     <param>
       <key>alias</key>
@@ -501,6 +458,49 @@
     <param>
       <key>suffix</key>
       <value>qAR,SA6BBC-10</value>
+    </param>
+  </block>
+  <block>
+    <key>igate_aprs_demod</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(480, 506)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>igate_aprs_demod_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>samp_rate</key>
+      <value>9600</value>
     </param>
   </block>
   <block>
@@ -3407,14 +3407,14 @@
     </param>
   </block>
   <connection>
-    <source_block_id>analog_fm_deemph_0</source_block_id>
-    <sink_block_id>chn_recv_0</sink_block_id>
+    <source_block_id>analog_fm_demod_cf_0</source_block_id>
+    <sink_block_id>analog_fm_deemph_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>analog_fm_demod_cf_0</source_block_id>
-    <sink_block_id>analog_fm_deemph_0</sink_block_id>
+    <sink_block_id>igate_aprs_demod_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -3423,12 +3423,6 @@
     <sink_block_id>rational_resampler_xxx_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>chn_recv_0</source_block_id>
-    <sink_block_id>igate_aprs_append_path_0</sink_block_id>
-    <source_key>out</source_key>
-    <sink_key>in</sink_key>
   </connection>
   <connection>
     <source_block_id>freq_xlating_fft_filter_ccc_0</source_block_id>
@@ -3443,6 +3437,12 @@
     <sink_key>in</sink_key>
   </connection>
   <connection>
+    <source_block_id>igate_aprs_demod_0</source_block_id>
+    <sink_block_id>igate_aprs_append_path_0</sink_block_id>
+    <source_key>out</source_key>
+    <sink_key>in</sink_key>
+  </connection>
+  <connection>
     <source_block_id>igate_aprs_pkt_gen_0</source_block_id>
     <sink_block_id>igate_debug_print_msg_0</sink_block_id>
     <source_key>out</source_key>
@@ -3450,7 +3450,7 @@
   </connection>
   <connection>
     <source_block_id>rational_resampler_xxx_0</source_block_id>
-    <sink_block_id>chn_recv_0</sink_block_id>
+    <sink_block_id>igate_aprs_demod_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
