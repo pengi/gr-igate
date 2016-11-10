@@ -22,5 +22,6 @@ include(GrPython)
 GR_PYTHON_INSTALL(
     PROGRAMS
     aprs_dump
+    aprs_igate
     DESTINATION bin
 )
