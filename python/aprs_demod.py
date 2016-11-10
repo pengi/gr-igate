@@ -39,48 +39,37 @@ class aprs_demod(gr.hier_block2):
         )
         self.message_port_register_hier_out("out")
 
-        ##################################################
-        # Parameters
-        ##################################################
         self.samp_rate = samp_rate
+        self.bit_rate = 1200
 
-        ##################################################
-        # Variables
-        ##################################################
-        self.bit_rate = bit_rate = 1200
+        taps = firdes.low_pass(1, self.samp_rate, 1200, 200)
+        self.afsk_shift = filter.freq_xlating_fir_filter_fcc(1, taps, (1200+2200)/2, self.samp_rate)
 
-        ##################################################
-        # Blocks
-        ##################################################
-        self.igate_clock_recovery_timer_bb_0 = igate.clock_recovery_timer_bb(samp_rate/bit_rate)
-        self.igate_aprs_air_to_is_pp_0 = igate.aprs_air_to_is_pp()
-        self.freq_xlating_fir_filter_xxx_0 = filter.freq_xlating_fir_filter_fcc(1, (firdes.low_pass(1, samp_rate, 1200, 200)), (1200+2200)/2, samp_rate)
-        self.digital_map_bb_0 = digital.map_bb(([1,0]))
-        self.digital_hdlc_deframer_bp_0 = digital.hdlc_deframer_bp(16, 1024)
-        self.digital_diff_decoder_bb_0 = digital.diff_decoder_bb(2)
-        self.digital_binary_slicer_fb_0 = digital.binary_slicer_fb()
-        self.analog_quadrature_demod_cf_0 = analog.quadrature_demod_cf(samp_rate/(2*math.pi*5008.0))
+        self.afsk_demod = analog.quadrature_demod_cf(1.0) # Don't care about gain just before binary slicer
+        self.threashold = digital.binary_slicer_fb()
+        self.clock_rec = igate.clock_recovery_timer_bb(self.samp_rate/self.bit_rate)
+        self.diff_decode = digital.diff_decoder_bb(2)
+        self.negate = digital.map_bb(([1,0]))
+        self.packetizer = digital.hdlc_deframer_bp(16, 1024)
+        self.parser = igate.aprs_air_to_is_pp()
 
-        ##################################################
-        # Connections
-        ##################################################
-        self.msg_connect((self.digital_hdlc_deframer_bp_0, 'out'), (self.igate_aprs_air_to_is_pp_0, 'in'))
-        self.msg_connect((self.igate_aprs_air_to_is_pp_0, 'out'), (self, 'out'))
-        self.connect((self.analog_quadrature_demod_cf_0, 0), (self.digital_binary_slicer_fb_0, 0))
-        self.connect((self.digital_binary_slicer_fb_0, 0), (self.igate_clock_recovery_timer_bb_0, 0))
-        self.connect((self.digital_diff_decoder_bb_0, 0), (self.digital_map_bb_0, 0))
-        self.connect((self.digital_map_bb_0, 0), (self.digital_hdlc_deframer_bp_0, 0))
-        self.connect((self.freq_xlating_fir_filter_xxx_0, 0), (self.analog_quadrature_demod_cf_0, 0))
-        self.connect((self.igate_clock_recovery_timer_bb_0, 0), (self.digital_diff_decoder_bb_0, 0))
-        self.connect((self, 0), (self.freq_xlating_fir_filter_xxx_0, 0))
+        self.connect((self, 0), (self.afsk_shift, 0))
+        self.connect((self.afsk_shift, 0), (self.afsk_demod, 0))
+        self.connect((self.afsk_demod, 0), (self.threashold, 0))
+        self.connect((self.threashold, 0), (self.clock_rec, 0))
+        self.connect((self.clock_rec, 0), (self.diff_decode, 0))
+        self.connect((self.diff_decode, 0), (self.negate, 0))
+        self.connect((self.negate, 0), (self.packetizer, 0))
+        self.msg_connect((self.packetizer, 'out'), (self.parser, 'in'))
+        self.msg_connect((self.parser, 'out'), (self, 'out'))
 
     def get_samp_rate(self):
         return self.samp_rate
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.freq_xlating_fir_filter_xxx_0.set_taps((firdes.low_pass(1, self.samp_rate, 1200, 200)))
-        self.analog_quadrature_demod_cf_0.set_gain(self.samp_rate/(2*math.pi*5008.0))
+        taps = firdes.low_pass(1, self.samp_rate, 1200, 200)
+        self.afsk_shift.set_taps(taps)
 
     def get_bit_rate(self):
         return self.bit_rate
