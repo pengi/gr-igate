@@ -34,6 +34,7 @@ from aprs_append_path import aprs_append_path
 from msg_timed_source import msg_timed_source
 from aprs_pkt_gen import aprs_pkt_gen
 from aprs_demod import aprs_demod
+from aprs_info_filter import aprs_info_filter
 
 
 

@@ -22,5 +22,6 @@ install(FILES
     igate_debug_print_msg.xml
     igate_aprs_append_path.xml
     igate_aprs_pkt_gen.xml
-    igate_aprs_demod.xml DESTINATION share/gnuradio/grc/blocks
+    igate_aprs_demod.xml
+    igate_aprs_info_filter.xml DESTINATION share/gnuradio/grc/blocks
 )
