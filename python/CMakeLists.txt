@@ -38,7 +38,7 @@ GR_PYTHON_INSTALL(
     aprs_pkt_gen.py
     aprs_demod.py
     aprs_info_filter.py
-    DESTINATION ${GR_PYTHON_DIR}/igate
+    aprs_is_sink.py DESTINATION ${GR_PYTHON_DIR}/igate
 )
 
 ########################################################################

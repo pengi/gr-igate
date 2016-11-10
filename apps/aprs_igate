@@ -17,15 +17,20 @@ class aprs_igate(gr.top_block):
 
         self.d_options = options
 
-        self.dbg_print = igate.debug_print_msg()
+        self.sink_inet = igate.aprs_is_sink(
+            self.d_options.host,
+            self.d_options.port,
+            self.d_options.callsign,
+            self.d_options.password
+        )
 
         src_ident = self._setup_source()
         rx_ident = self._setup_air_to_inet(src_ident)
-        self.msg_connect(rx_ident, (self.dbg_print, 'in'))
+        self.msg_connect(rx_ident, (self.sink_inet, 'in'))
 
         if self.d_options.interval:
             beacon_ident = self._setup_beacon()
-            self.msg_connect(beacon_ident, (self.dbg_print, 'in'))
+            self.msg_connect(beacon_ident, (self.sink_inet, 'in'))
 
     def _setup_beacon(self):
         self.beacon_src = igate.aprs_pkt_gen(
