@@ -87,8 +87,8 @@ def ax25_parse( frame ):
     if len( path ) < 2:
         return
 
-    res["dst"] = path[0]
-    res["src"] = path[1]
+    res["dst"] = path[0].rstrip("*")
+    res["src"] = path[1].rstrip("*")
     res["path"] = path[2:]
 
     ##### Control bytes
