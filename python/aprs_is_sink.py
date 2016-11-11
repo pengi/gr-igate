@@ -71,7 +71,7 @@ class aprs_is_sink(gr.sync_block):
     def _handle_msg(self, msg_pmt):
         pkt = pmt.to_python(msg_pmt)
         msg = pack_message(pkt)
-        print ">>", msg,
+        print " >", msg,
         if self.d_socket != None:
             self.d_socket.sendall(msg)
         else:
@@ -83,7 +83,7 @@ class aprs_is_sink(gr.sync_block):
             try:
                 data = self.d_socket.recv(1024)
                 if data:
-                    print "<<", data,
+                    print "< ", data,
             except:
                 pass
             self.d_stop.wait(0.1)
