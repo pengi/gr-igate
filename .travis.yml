@@ -1,0 +1,20 @@
+dist: trusty
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - swig
+      - doxygen
+      - libpython-dev
+      - libboost-all-dev
+      - libcppunit-dev
+      - gnuradio
+      - gnuradio-dev
+
+script:
+  - mkdir build
+  - cd build
+  - cmake .. -Wno-dev
+  - make
+  - make test
