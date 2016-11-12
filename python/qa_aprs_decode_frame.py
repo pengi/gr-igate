@@ -21,9 +21,9 @@
 
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
-from aprs_air_to_is_pp import aprs_air_to_is_pp
+from aprs_decode_frame import aprs_decode_frame
 
-class qa_aprs_air_to_is_pp (gr_unittest.TestCase):
+class qa_aprs_decode_frame (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -38,4 +38,4 @@ class qa_aprs_air_to_is_pp (gr_unittest.TestCase):
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_aprs_air_to_is_pp, "qa_aprs_air_to_is_pp.xml")
+    gr_unittest.run(qa_aprs_decode_frame, "qa_aprs_decode_frame.xml")

@@ -31,7 +31,7 @@ endif()
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    aprs_air_to_is_pp.py
+    aprs_decode_frame.py
     debug_print_msg.py
     aprs_append_path.py
     msg_timed_source.py
@@ -49,7 +49,7 @@ include(GrTest)
 set(GR_TEST_TARGET_DEPS gnuradio-igate)
 set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
 GR_ADD_TEST(qa_clock_recovery_timer_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_clock_recovery_timer_bb.py)
-GR_ADD_TEST(qa_aprs_air_to_is_pp ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_air_to_is_pp.py)
+GR_ADD_TEST(qa_aprs_decode_frame ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_decode_frame.py)
 GR_ADD_TEST(qa_aprs_append_path ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_append_path.py)
 GR_ADD_TEST(qa_aprs_pkt_gen ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_pkt_gen.py)
 GR_ADD_TEST(qa_aprs_info_filter ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_info_filter.py)

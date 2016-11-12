@@ -18,7 +18,7 @@
 # Boston, MA 02110-1301, USA.
 install(FILES
     igate_clock_recovery_timer_bb.xml
-    igate_aprs_air_to_is_pp.xml
+    igate_aprs_decode_frame.xml
     igate_debug_print_msg.xml
     igate_aprs_append_path.xml
     igate_aprs_pkt_gen.xml

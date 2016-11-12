@@ -28,7 +28,7 @@ from igate_swig import *
 
 # import any pure python here
 
-from aprs_air_to_is_pp import aprs_air_to_is_pp
+from aprs_decode_frame import aprs_decode_frame
 from debug_print_msg import debug_print_msg
 from aprs_append_path import aprs_append_path
 from msg_timed_source import msg_timed_source

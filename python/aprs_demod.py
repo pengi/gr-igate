@@ -51,7 +51,7 @@ class aprs_demod(gr.hier_block2):
         self.diff_decode = digital.diff_decoder_bb(2)
         self.negate = digital.map_bb(([1,0]))
         self.packetizer = digital.hdlc_deframer_bp(16, 1024)
-        self.parser = igate.aprs_air_to_is_pp()
+        self.parser = igate.aprs_decode_frame()
 
         self.connect((self, 0), (self.afsk_shift, 0))
         self.connect((self.afsk_shift, 0), (self.afsk_demod, 0))

@@ -22,13 +22,13 @@
 from gnuradio import gr
 import pmt
 
-class aprs_air_to_is_pp(gr.sync_block):
+class aprs_decode_frame(gr.sync_block):
     """
-    docstring for block aprs_air_to_is_pp
+    docstring for block aprs_decode_frame
     """
     def __init__(self):
         gr.sync_block.__init__(self,
-            name="aprs_air_to_is_pp",
+            name="aprs_decode_frame",
             in_sig=None,
             out_sig=None)
         self.message_port_register_in(pmt.intern('in'))

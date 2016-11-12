@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <block>
   <name>APRS air to IS</name>
-  <key>igate_aprs_air_to_is_pp</key>
+  <key>igate_aprs_decode_frame</key>
   <category>[igate]</category>
   <import>import igate</import>
-  <make>igate.aprs_air_to_is_pp()</make>
+  <make>igate.aprs_decode_frame()</make>
   <sink>
     <name>in</name>
     <type>message</type>
