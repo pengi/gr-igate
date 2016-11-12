@@ -34,11 +34,16 @@ class aprs_append_path(gr.sync_block):
         self.message_port_register_in(pmt.intern('in'))
         self.message_port_register_out(pmt.intern('out'))
 
-        self.d_suffix = suffix.split(",")
+        self.d_suffix = [el for el in suffix.split(",") if el != '']
 
-        self.set_msg_handler(pmt.intern('in'), self.handle_msg)
+        self.set_msg_handler(pmt.intern('in'), self._handle_msg)
 
-    def handle_msg(self, msg_pmt):
+    def _handle_msg(self, msg_pmt):
         pkt = pmt.to_python(msg_pmt)
-        pkt["path"] += self.d_suffix
-        self.message_port_pub(pmt.intern('out'), pmt.to_pmt(pkt))
+        try:
+            pkt["path"] += self.d_suffix
+            self.message_port_pub(pmt.intern('out'), pmt.to_pmt(pkt))
+        except Exception as e:
+            # TODO: Error handling, but for now, just output the error
+            print "aprs_appent_path error:", e
+            print "original message:", pkt
