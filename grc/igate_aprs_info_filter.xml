@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>aprs_info_filter</name>
+  <name>APRS info filter</name>
   <key>igate_aprs_info_filter</key>
   <category>[igate]</category>
   <import>import igate</import>
