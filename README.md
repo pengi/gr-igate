@@ -16,6 +16,9 @@ Those instructions expects that you run linux or macOS.
 You need to have gnuradio installed. Please refer to gnuradio documentation:
 http://gnuradio.org/redmine/projects/gnuradio/wiki
 
+You also need the osmosdr suorce block, more information here:
+http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
+
 Then check out this repository and run:
 ```
 cd gr-igate # This repository
