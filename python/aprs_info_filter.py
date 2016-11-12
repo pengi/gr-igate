@@ -37,9 +37,14 @@ class aprs_info_filter(gr.sync_block):
 
         self.d_regexp = re.compile(regexp)
 
-        self.set_msg_handler(pmt.intern('in'), self.handle_msg)
+        self.set_msg_handler(pmt.intern('in'), self._handle_msg)
 
-    def handle_msg(self, msg_pmt):
+    def _handle_msg(self, msg_pmt):
         pkt = pmt.to_python(msg_pmt)
-        if self.d_regexp.match(pkt['info']):
-            self.message_port_pub(pmt.intern('out'), pmt.to_pmt(pkt))
+        try:
+            if self.d_regexp.match(pkt['info']):
+                self.message_port_pub(pmt.intern('out'), pmt.to_pmt(pkt))
+        except Exception as e:
+            # TODO: Error handling, but for now, just output the error
+            print "aprs_info_filter error:", e
+            print "original message:", pkt
