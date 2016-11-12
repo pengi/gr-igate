@@ -43,7 +43,10 @@ class aprs_air_to_is_pp(gr.sync_block):
         else:
             msg_str = "".join([chr(x) for x in pmt.u8vector_elements(msg)])
             pkt = ax25_parse(msg_str)
-            self.message_port_pub(pmt.intern('out'), pmt.to_pmt(pkt))
+            if pkt != None:
+                self.message_port_pub(pmt.intern('out'), pmt.to_pmt(pkt))
+            else:
+                print "[ERROR] invalid formatted message"
 
 
 def ax25_parse( frame ):
@@ -57,7 +60,7 @@ def ax25_parse( frame ):
 
     while in_addr:
         if left == 0:
-            return
+            return None
 
         byte = ord( frame[ptr] )
         ptr += 1
@@ -82,10 +85,10 @@ def ax25_parse( frame ):
         addr = addr[7:]
 
     if len( addr ) != 0:
-        return
+        return None
 
     if len( path ) < 2:
-        return
+        return None
 
     res["dst"] = path[0].rstrip("*")
     res["src"] = path[1].rstrip("*")
@@ -94,7 +97,7 @@ def ax25_parse( frame ):
     ##### Control bytes
 
     if left < 1:
-        return
+        return None
     res["ctrl"] = ord( frame[ptr] )
     ptr += 1
     left += 1
@@ -102,7 +105,7 @@ def ax25_parse( frame ):
     # FIXME: different types and ctrl-fields
 
     if left < 1:
-        return
+        return None
     res["pid"] = ord( frame[ptr] )
     ptr += 1
     left += 1
