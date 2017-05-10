@@ -93,9 +93,10 @@ def secure_text(text):
     return text
 
 def pack_message(pkt):
-    return "%s>%s%s:%s\n" % (
+    lines_info = pkt['info'].splitlines()
+    return "%s>%s%s:%s\r\n" % (
         secure_text(pkt['src']),
         secure_text(pkt['dst']),
         secure_text("".join([ ","+x for x in pkt['path']])),
-        secure_text(pkt['info'])
+        secure_text(lines_info[0])
     )

@@ -53,3 +53,4 @@ GR_ADD_TEST(qa_aprs_decode_frame ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR
 GR_ADD_TEST(qa_aprs_append_path ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_append_path.py)
 GR_ADD_TEST(qa_aprs_pkt_gen ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_pkt_gen.py)
 GR_ADD_TEST(qa_aprs_info_filter ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_info_filter.py)
+GR_ADD_TEST(qa_aprs_is_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_aprs_is_sink.py)
