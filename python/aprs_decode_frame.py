@@ -33,9 +33,9 @@ class aprs_decode_frame(gr.sync_block):
             out_sig=None)
         self.message_port_register_in(pmt.intern('in'))
         self.message_port_register_out(pmt.intern('out'))
-        self.set_msg_handler(pmt.intern('in'), self.handle_msg)
+        self.set_msg_handler(pmt.intern('in'), self._handle_msg)
 
-    def handle_msg(self, msg_pmt):
+    def _handle_msg(self, msg_pmt):
         meta = pmt.to_python(pmt.car(msg_pmt))
         msg = pmt.cdr(msg_pmt)
         if not pmt.is_u8vector(msg):
@@ -110,6 +110,6 @@ def ax25_parse( frame ):
     ptr += 1
     left += 1
 
-    res["info"] = frame[ptr:].rstrip()
+    res["info"] = frame[ptr:]
 
     return res
