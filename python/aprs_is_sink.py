@@ -53,7 +53,7 @@ class aprs_is_sink(gr.sync_block):
 
         self.d_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.d_socket.connect((self.d_host, self.d_port))
-        self.d_socket.sendall('user %s pass %d\n' % (self.d_callsign, self.d_password))
+        self.d_socket.sendall('user %s pass %d\r\n' % (self.d_callsign, self.d_password))
 
         self.d_thread.start()
         return True
