@@ -22,47 +22,68 @@
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
 import pmt
-from aprs_is_sink import pack_message
+from aprs_is_sink import aprs_is_sink
 
 class qa_aprs_is_sink (gr_unittest.TestCase):
 
     def setUp (self):
-        self.msglog = []
+        self._last_msg = None
 
     def tearDown (self):
         pass
+    
+    def _send(self, msg):
+        self._last_msg = msg
 
     def test_001_simple_pack (self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345, 'app')
+        sut._send = self._send # Monkey patch so we can verify
+        
         stimuli = {
             'src': 'DST2ZZ-3',
             'dst': 'SRC1ZZ-13',
             'path': ['MID1-5*', 'MID2-2'],
             'info': 'stuff'
         }
-        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:stuff\r\n"
-        self.assertEquals(pack_message(stimuli), expect)
+        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:stuff"
+        
+        sut._handle_msg(pmt.to_pmt(stimuli))
+        self.assertEquals(self._last_msg, expect)
 
     def test_002_trim_first_line_LF (self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345, 'app')
+        sut._send = self._send # Monkey patch so we can verify
+        
         stimuli = {
             'src': 'DST2ZZ-3',
             'dst': 'SRC1ZZ-13',
             'path': ['MID1-5*', 'MID2-2'],
             'info': 'stuff and stuff\nboll'
         }
-        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:stuff and stuff\r\n"
-        self.assertEquals(pack_message(stimuli), expect)
+        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:stuff and stuff"
+        
+        sut._handle_msg(pmt.to_pmt(stimuli))
+        self.assertEquals(self._last_msg, expect)
 
     def test_003_trim_first_line_CR (self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345, 'app')
+        sut._send = self._send # Monkey patch so we can verify
+        
         stimuli = {
             'src': 'DST2ZZ-3',
             'dst': 'SRC1ZZ-13',
             'path': ['MID1-5*', 'MID2-2'],
             'info': 'stuff and stuff\rboll'
         }
-        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:stuff and stuff\r\n"
-        self.assertEquals(pack_message(stimuli), expect)
+        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:stuff and stuff"
+        
+        sut._handle_msg(pmt.to_pmt(stimuli))
+        self.assertEquals(self._last_msg, expect)
         
     def test_004_binary_safe (self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345, 'app')
+        sut._send = self._send # Monkey patch so we can verify
+        
         info_bin = range(256)
         info_bin.remove(ord('\n')) # Linebreaks will be removed, se above
         info_bin.remove(ord('\r')) # Linebreaks will be removed, se above
@@ -73,8 +94,33 @@ class qa_aprs_is_sink (gr_unittest.TestCase):
             'path': ['MID1-5*', 'MID2-2'],
             'info': info
         }
-        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:"+info+"\r\n"
-        self.assertEquals(pack_message(stimuli), expect)
+        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:"+info
+        
+        sut._handle_msg(pmt.to_pmt(stimuli))
+        self.assertEquals(self._last_msg, expect)
+    
+    def test_005_login(self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345)
+        sut._send = self._send # Monkey patch so we can verify
+        
+        sut._login()
+        self.assertEquals(self._last_msg, 'user CALL pass 12345')
+
+    
+    def test_006_login_appname(self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345, 'app')
+        sut._send = self._send # Monkey patch so we can verify
+        
+        sut._login()
+        self.assertEquals(self._last_msg, 'user CALL pass 12345 vers app unknown')
+
+    
+    def test_007_login_appname_appvers(self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345, 'app', 'vers')
+        sut._send = self._send # Monkey patch so we can verify
+        
+        sut._login()
+        self.assertEquals(self._last_msg, 'user CALL pass 12345 vers app vers')
 
 if __name__ == '__main__':
     gr_unittest.run(qa_aprs_is_sink, "qa_aprs_is_sink.xml")
