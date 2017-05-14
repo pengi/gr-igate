@@ -25,7 +25,8 @@ include(GrPlatform) #define LIB_SUFFIX
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND igate_sources
-    clock_recovery_timer_bb_impl.cc )
+    clock_recovery_timer_bb_impl.cc
+    meta.cc )
 
 set(igate_sources "${igate_sources}" PARENT_SCOPE)
 if(NOT igate_sources)

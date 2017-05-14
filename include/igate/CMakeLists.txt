@@ -22,5 +22,6 @@
 ########################################################################
 install(FILES
     api.h
-    clock_recovery_timer_bb.h DESTINATION include/igate
+    clock_recovery_timer_bb.h
+    meta.h DESTINATION include/igate
 )

@@ -46,6 +46,15 @@ set(VERSION_INFO_API_COMPAT    0)
 set(VERSION_INFO_MINOR_VERSION 0)
 set(VERSION_INFO_MAINT_VERSION git)
 
+# Export git version to build
+execute_process(
+    COMMAND git describe --dirty
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GITVERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+add_definitions(-DVERSION="${GITVERSION}")
+
 ########################################################################
 # Compiler specific setup
 ########################################################################

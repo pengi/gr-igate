@@ -23,7 +23,7 @@ class aprs_igate(gr.top_block):
             self.d_options.callsign,
             self.d_options.password,
             'gr-igate',
-            'v0.9.9'
+            igate.meta.version()
         )
 
         src_ident = self._setup_source()
