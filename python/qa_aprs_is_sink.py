@@ -122,5 +122,17 @@ class qa_aprs_is_sink (gr_unittest.TestCase):
         sut._login()
         self.assertEquals(self._last_msg, 'user CALL pass 12345 vers app vers')
 
+    def test_008_info_dont_trim (self):
+        sut = aprs_is_sink(None, None, 'CALL', 12345, 'app')
+        sut._send = self._send # Monkey patch so we can verify
+        
+        stimuli = {
+            'src': 'DST2ZZ-3',
+            'dst': 'SRC1ZZ-13',
+            'path': ['MID1-5*', 'MID2-2'],
+            'info': 'stuff '
+        }
+        expect = "DST2ZZ-3>SRC1ZZ-13,MID1-5*,MID2-2:stuff "
+
 if __name__ == '__main__':
     gr_unittest.run(qa_aprs_is_sink, "qa_aprs_is_sink.xml")
