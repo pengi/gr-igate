@@ -36,6 +36,7 @@ from aprs_pkt_gen import aprs_pkt_gen
 from aprs_demod import aprs_demod
 from aprs_info_filter import aprs_info_filter
 from aprs_is_sink import aprs_is_sink
+from aprs_path_filter import aprs_path_filter
 
 
 

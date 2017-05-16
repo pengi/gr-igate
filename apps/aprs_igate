@@ -51,8 +51,11 @@ class aprs_igate(gr.top_block):
         self.rx_thirdparty_filter = igate.aprs_info_filter('^[^}]')
         self.msg_connect(src_ident, (self.rx_thirdparty_filter, 'in'))
 
+        self.rx_nogate_filter = igate.aprs_path_filter('^(NOGATE|RFONLY)', True, True)
+        self.msg_connect((self.rx_thirdparty_filter, 'out'), (self.rx_nogate_filter, 'in'))
+
         self.rx_path_append = igate.aprs_append_path('qAR,'+self.d_options.callsign)
-        self.msg_connect((self.rx_thirdparty_filter, 'out'), (self.rx_path_append, 'in'))
+        self.msg_connect((self.rx_nogate_filter, 'out'), (self.rx_path_append, 'in'))
 
         return (self.rx_path_append, 'out')
 

@@ -9,7 +9,7 @@
   <param>
     <name>regexp</name>
     <key>regexp</key>
-    <type>string</type>
+    <type>bool</type>
   </param>
 
   <sink>
